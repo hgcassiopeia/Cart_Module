@@ -1,0 +1,44 @@
+<?php
+
+//hook_permission()
+function cpd_cart_permission(){
+    return array(
+        'administer add product module' => array(
+            'title' => t('CPD_cart Add'),
+            'description' => t('add product module permission'),
+            'restrict access' => TRUE,
+        ),
+        'administer list product module' => array(
+            'title' => t('CPD_cart List'),
+            'description' => t('list product module permission'),
+            'restrict access' => TRUE,
+        ),
+    );
+}
+
+//hook_menu()
+function cpd_cart_menu(){
+    $items = array();
+
+    $items['add-product']=array(
+        'title'=>'Add product',
+        'description'=>'Add product Page',
+        'page callback'=>'drupal_get_form',
+        'page arguments'=>array('cpd_cart_AddForm'),
+        'access arguments'=>array('administer add product module'),
+        'type'=>MENU_NORMAL_ITEM,
+        'file'=>'cpd_cart.add.inc'
+    );
+
+    $items['list-product']=array(
+        'title'=>'List product',
+        'description'=>'List product Page',
+        'page callback'=>'drupal_get_form',
+        'page arguments'=>array('cpd_cart_list'),
+        'access arguments'=>array('administer list product module'),
+        'type'=>MENU_NORMAL_ITEM,
+        'file'=>'cpd_cart.list.inc'
+    );
+
+    return $items;
+}
